@@ -13,7 +13,7 @@ export default function App() {
 
   const toggleTask = (id) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
+      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
     );
   };
 
@@ -23,32 +23,16 @@ export default function App() {
 
   return (
     <div>
-      <Navbar></Navbar>
+      <Navbar />
+
       <div className="flex">
+        {/* Sidebar */}
         <div>
-          <Sidebar tasks={tasks}></Sidebar>
+          <Sidebar tasks={tasks} />
         </div>
-        <div className="w-full max-w-2xl">
-          <header className="mb-10 flex justify-between items-end">
-            <div>
-              <h1 className="text-4xl font-black tracking-tight text-slate-900">
-                Focus Flow.
-              </h1>
-              <p className="mt-2 text-lg text-slate-500">امروز چه هدفی داری؟</p>
-            </div>
 
-            <div className="text-right">
-              <span className="block text-3xl font-bold text-blue-600">
-                {tasks.filter((t) => t.completed).length}/{tasks.length}
-              </span>
-              <span className="text-xs font-bold uppercase text-slate-400">
-                تکمیل شده
-              </span>
-            </div>
-          </header>
-
-          <TaskForm onAdd={addTask} />
-
+        {/* Task list وسط */}
+        <div className="flex-1 px-6">
           <div className="mt-8 space-y-3">
             {tasks.map((task) => (
               <TaskItem
@@ -59,6 +43,11 @@ export default function App() {
               />
             ))}
           </div>
+        </div>
+
+        {/* Task form سمت راست */}
+        <div>
+          <TaskForm onAdd={addTask} />
         </div>
       </div>
     </div>

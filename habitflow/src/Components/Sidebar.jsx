@@ -13,7 +13,7 @@ export default function Sidebar({tasks }) {
   console.log({ total, done, percent });
 
   return (
-    <div className="bg-blue-50 w-96 py-10 font-bold h-screen">
+    <div className="max-w-md mx-auto h-screen p-8 bg-blue-50 rounded-xl shadow-xl border border-slate-100">
       {/* icons */}
       <svg className="hidden">
         <symbol
@@ -114,7 +114,7 @@ export default function Sidebar({tasks }) {
       </svg>
       {/* lists */}
       <ul className="flex flex-col gap-y-10 pl-4">
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-[50%] rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
+        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">
             <svg className="w-5 h-5">
@@ -123,7 +123,7 @@ export default function Sidebar({tasks }) {
             Tasks
           </a>
         </li>
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-[50%] rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
+        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">
             <svg className="w-5 h-5">
@@ -132,7 +132,7 @@ export default function Sidebar({tasks }) {
             Calender
           </a>
         </li>
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-[50%] rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
+        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">
             <svg className="w-5 h-5">
@@ -141,7 +141,7 @@ export default function Sidebar({tasks }) {
             Stats
           </a>
         </li>
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-[50%] rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
+        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">
             <svg className="w-5 h-5">
@@ -150,7 +150,7 @@ export default function Sidebar({tasks }) {
             Goals
           </a>
         </li>
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-[50%] rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
+        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">
             <svg className="w-5 h-5">
@@ -161,7 +161,7 @@ export default function Sidebar({tasks }) {
         </li>
       </ul>
 
-      <div className="mt-10 flex flex-col items-center justify-center border border-gray-300 rounded-3xl mx-5 py-5">
+      <div className="mt-10 flex flex-col items-center justify-center border border-gray-300 rounded-3xl mx-5 p-5">
         <div>
           <svg className="w-14 h-14 font-light">
             <use href="#trophy"></use>
