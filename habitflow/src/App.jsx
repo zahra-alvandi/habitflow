@@ -5,21 +5,28 @@ import TaskItem from "./Components/TaskItem";
 import Sidebar from "./Components/Sidebar";
 import Navbar from "./Components/Navbar";
 import CalendarView from "./Components/CalendarView";
+// import "@fullcalendar/core/main.css";
+// import "@fullcalendar/daygrid/main.css";
+// import "@fullcalendar/timegrid/main.css";
+
+// import "./styles/fullcalendar-minimal.css";
+
 
 export default function App() {
   const [tasks, setTasks] = useLocalStorage("planner-v1", []);
-  const [activeView, setActiveView] = useState("tasks"); // "tasks" | "calendar"
-  const [selectedDate, setSelectedDate] = useState(null); // "YYYY-MM-DD" یا null
+  const [activeView, setActiveView] = useState("tasks");
+  const [selectedDate, setSelectedDate] = useState(null);
 
   const addTask = (task) => setTasks((prev) => [task, ...prev]);
 
   const toggleTask = (id) => {
     setTasks((prev) =>
-      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t))
+      prev.map((t) => (t.id === id ? { ...t, completed: !t.completed } : t)),
     );
   };
 
-  const deleteTask = (id) => setTasks((prev) => prev.filter((t) => t.id !== id));
+  const deleteTask = (id) =>
+    setTasks((prev) => prev.filter((t) => t.id !== id));
 
   const filteredTasks =
     selectedDate && activeView === "calendar"
@@ -35,11 +42,11 @@ export default function App() {
           <Sidebar
             tasks={tasks}
             activeView={activeView}
-            onOpenCalendar={() => setActiveView("calendar")}
             onOpenTasks={() => {
               setActiveView("tasks");
               setSelectedDate(null);
             }}
+            onOpenCalendar={() => setActiveView("calendar")}
           />
         </div>
 
@@ -51,7 +58,6 @@ export default function App() {
                   tasks={tasks}
                   onSelectDate={(dateStr) => setSelectedDate(dateStr)}
                   onSelectTask={(task) => {
-                    // اختیاری: کلیک روی event => فقط همان روز را انتخاب کن
                     if (task?.date) setSelectedDate(task.date);
                   }}
                 />

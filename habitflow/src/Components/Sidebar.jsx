@@ -2,9 +2,9 @@ import ProgressBar from "./ProgressBar";
 
 export default function Sidebar({
   tasks,
-  onOpenCalendar,
-  onOpenTasks,
   activeView,
+  onOpenTasks,
+  onOpenCalendar,
 }) {
   console.log("Sidebar tasks:", tasks);
 
@@ -117,15 +117,22 @@ export default function Sidebar({
       </svg>
       {/* lists */}
       <ul className="flex flex-col gap-y-10 pl-4">
-        <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
-          {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
-          <a href="#" className="flex items-center gap-1">
+        <li
+          className={`text-black flex items-center gap-5 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 transition
+  ${activeView === "tasks" ? "text-blue-600 bg-blue-200 border-l-4 border-l-blue-600" : "hover:text-blue-600 hover:bg-blue-200 hover:border-l-4 hover:border-l-blue-600"}`}
+        >
+          <button
+            type="button"
+            onClick={onOpenTasks}
+            className="flex w-full items-center gap-1 text-left"
+          >
             <svg className="w-5 h-5">
-              <use href="#tasks"></use>
+              <use href="#task" />
             </svg>
             Tasks
-          </a>
+          </button>
         </li>
+
         <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           <button
             type="button"
