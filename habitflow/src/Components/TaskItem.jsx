@@ -4,7 +4,7 @@ export default function TaskItem({ task, onToggle, onDelete }) {
   return (
     <div
       className={`group flex items-center justify-between p-5 mb-3 rounded-2xl border transition-all duration-300 
-      ${task.completed ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-blue-50 shadow-sm hover:shadow-md hover:border-blue-200"}`}
+      ${task.completed ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-blue-50 shadow-sm hover:shadow-md hover:border-blue-200 w-[50%]"}`}
     >
       <div className="flex items-center gap-4">
         {/* Custom Checkbox */}
@@ -30,7 +30,7 @@ export default function TaskItem({ task, onToggle, onDelete }) {
           )}
         </div>
 
-        <div>
+        <div className="flex items-center gap-10">
           <h3
             className={`font-semibold text-lg ${task.completed ? "line-through text-gray-400" : "text-gray-700"}`}
           >
@@ -38,7 +38,7 @@ export default function TaskItem({ task, onToggle, onDelete }) {
           </h3>
           <span
             className={`text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wider 
-            ${task.type === "study" ? "bg-purple-50 text-purple-500" : "bg-orange-50 text-orange-500"}`}
+            ${task.type === "study" ? "bg-purple-100 text-purple-600" : "bg-orange-50 text-orange-500"}`}
           >
             {task.type === "study" ? "📚 Study" : "💪 Workout"}
           </span>
@@ -47,7 +47,7 @@ export default function TaskItem({ task, onToggle, onDelete }) {
 
       <button
         onClick={() => onDelete(task.id)}
-        className="p-2 text-gray-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+        className="p-2 text-red-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
       >
         <IconTrash />
       </button>

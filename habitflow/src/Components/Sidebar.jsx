@@ -4,16 +4,14 @@ export default function Sidebar({tasks }) {
   console.log("Sidebar tasks:", tasks);
   
   const total = tasks.length;
-  // ۱. اصلاح غلط املایی compeleted -> completed
   const done = tasks.filter((t) => t.completed).length; 
 
-  // ۲. اصلاح فرمول ریاضی از ضرب به تقسیم
   const percent = total === 0 ? 0 : Math.round((done / total) * 100);
 
   console.log({ total, done, percent });
 
   return (
-    <div className="max-w-md mx-auto h-screen p-8 bg-blue-50 rounded-xl shadow-xl border border-slate-100">
+    <div className="max-w-md mx-auto h-screen p-8 bg-blue-50 rounded-xl shadow-xl border border-slate-100 flex flex-col justify-evenly">
       {/* icons */}
       <svg className="hidden">
         <symbol

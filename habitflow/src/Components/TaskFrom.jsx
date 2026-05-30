@@ -71,7 +71,7 @@ export default function TaskForm({ onAdd }) {
   };
 
   return (
-    <div className="max-w-md mx-auto h-full p-8 bg-blue-50 rounded-xl shadow-xl border border-slate-100">
+    <div className="max-w-md mx-auto h-full p-8 bg-blue-50 rounded-xl shadow-xl border border-slate-100 ">
       {/* svg symbols */}
       <svg className="hidden">
         <symbol
