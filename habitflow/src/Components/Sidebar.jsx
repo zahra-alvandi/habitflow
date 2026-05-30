@@ -1,10 +1,15 @@
 import ProgressBar from "./ProgressBar";
 
-export default function Sidebar({tasks }) {
+export default function Sidebar({
+  tasks,
+  onOpenCalendar,
+  onOpenTasks,
+  activeView,
+}) {
   console.log("Sidebar tasks:", tasks);
-  
+
   const total = tasks.length;
-  const done = tasks.filter((t) => t.completed).length; 
+  const done = tasks.filter((t) => t.completed).length;
 
   const percent = total === 0 ? 0 : Math.round((done / total) * 100);
 
@@ -122,14 +127,18 @@ export default function Sidebar({tasks }) {
           </a>
         </li>
         <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
-          {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
-          <a href="#" className="flex items-center gap-1">
+          <button
+            type="button"
+            onClick={onOpenCalendar}
+            className="flex w-full items-center gap-1"
+          >
             <svg className="w-5 h-5">
               <use href="#calender"></use>
             </svg>
             Calender
-          </a>
+          </button>
         </li>
+
         <li className="text-black flex items-center gap-5 hover:text-blue-600 hover:bg-blue-200 w-full rounded-br-2xl rounded-tr-2xl py-2.5 pl-2.5 hover:border-l-4 hover:border-l-blue-600 transition">
           {/* <div className="w-1 bg-blue-600 h-12 pl-2 rounded-full"></div> */}
           <a href="#" className="flex items-center gap-1">

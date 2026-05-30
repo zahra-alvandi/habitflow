@@ -35,7 +35,11 @@ function SelectWithIcon({ iconId, value, onChange, children }) {
 export default function TaskForm({ onAdd }) {
   const [title, setTitle] = useState("");
   const [type, setType] = useState("study");
-  const [day, setDay] = useState("Monday");
+  const [date, setDate] = useState(() => {
+    const d = new Date();
+    return d.toISOString().slice(0, 10); // YYYY-MM-DD
+  });
+
   const [time, setTime] = useState("");
 
   const weekDays = [
@@ -57,7 +61,7 @@ export default function TaskForm({ onAdd }) {
       id: crypto.randomUUID(),
       title: title.trim(),
       type,
-      day,
+      date,
       time,
       completed: false,
     };
@@ -137,19 +141,14 @@ export default function TaskForm({ onAdd }) {
 
         <div>
           <label className="mb-2 block text-sm font-medium text-slate-700">
-            Day
+            Date
           </label>
-          <SelectWithIcon
-            iconId="calendar"
-            value={day}
-            onChange={(e) => setDay(e.target.value)}
-          >
-            {weekDays.map((d) => (
-              <option key={d.value} value={d.value}>
-                {d.label}
-              </option>
-            ))}
-          </SelectWithIcon>
+          <input
+            type="date"
+            value={date}
+            onChange={(e) => setDate(e.target.value)}
+            className="w-full rounded-xl border border-slate-300 px-4 py-3 outline-none transition focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
+          />
         </div>
 
         <div>
