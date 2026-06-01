@@ -3,51 +3,51 @@ import { IconTrash } from "../Icons/Index";
 export default function TaskItem({ task, onToggle, onDelete }) {
   return (
     <div
-      className={`group flex items-center justify-between p-4 mb-3 rounded-2xl border transition-all duration-300 w-full max-w-xl mx-auto
-      ${task.completed ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-blue-50 shadow-sm hover:shadow-md hover:border-blue-200"}`}
+      className={`group flex items-center justify-between p-4 rounded-2xl border transition-all duration-300 w-full max-w-lg mx-auto
+      ${
+        task.completed
+          ? "bg-gray-50 border-gray-100 opacity-60"
+          : "bg-white border-blue-100 shadow-sm hover:shadow-md"
+      }`}
     >
-      <div className="flex items-center gap-4">
-        {/* Custom Checkbox */}
-        <div
+      <div className="flex items-center gap-3 min-w-0">
+        <button
           onClick={() => onToggle(task.id)}
-          className={`w-6 h-6 rounded-lg border-2 cursor-pointer flex items-center justify-center transition-all
-            ${task.completed ? "bg-blue-500 border-blue-500" : "border-gray-300 group-hover:border-blue-400"}`}
+          className={`w-6 h-6 rounded-lg border-2 flex items-center justify-center shrink-0
+            ${
+              task.completed
+                ? "bg-blue-500 border-blue-500"
+                : "border-gray-300 hover:border-blue-400"
+            }`}
+          aria-label="Toggle task"
+          type="button"
         >
-          {task.completed && (
-            <svg
-              className="w-4 h-4 text-white"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="3"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 13l4 4L19 7"
-              />
-            </svg>
-          )}
-        </div>
+          {task.completed && <div className="w-3 h-3 bg-white rounded-sm" />}
+        </button>
 
-        <div className="flex items-center gap-10">
+        <div className="min-w-0">
           <h3
-            className={`font-semibold text-lg ${task.completed ? "line-through text-gray-400" : "text-gray-700"}`}
+            className={`font-semibold truncate ${
+              task.completed ? "line-through text-gray-400" : "text-gray-700"
+            }`}
           >
             {task.title}
           </h3>
           <span
-            className={`text-xs px-2 py-1 rounded-md font-bold uppercase tracking-wider 
-            ${task.type === "study" ? "bg-purple-100 text-purple-600" : "bg-orange-50 text-orange-500"}`}
+            className={`text-[10px] font-bold uppercase ${
+              task.type === "study" ? "text-purple-500" : "text-orange-500"
+            }`}
           >
-            {task.type === "study" ? "📚 Study" : "💪 Workout"}
+            {task.type}
           </span>
         </div>
       </div>
 
       <button
         onClick={() => onDelete(task.id)}
-        className="p-2 text-red-300 hover:text-red-500 hover:bg-red-50 rounded-xl transition-all"
+        className="p-2 text-gray-300 hover:text-red-500 shrink-0"
+        aria-label="Delete task"
+        type="button"
       >
         <IconTrash />
       </button>
