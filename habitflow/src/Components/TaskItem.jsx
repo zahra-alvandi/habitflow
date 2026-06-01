@@ -3,8 +3,8 @@ import { IconTrash } from "../Icons/Index";
 export default function TaskItem({ task, onToggle, onDelete }) {
   return (
     <div
-      className={`group flex items-center justify-between p-5 mb-3 rounded-2xl border transition-all duration-300 
-      ${task.completed ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-blue-50 shadow-sm hover:shadow-md hover:border-blue-200 w-[50%]"}`}
+      className={`group flex items-center justify-between p-4 mb-3 rounded-2xl border transition-all duration-300 w-full max-w-xl mx-auto
+      ${task.completed ? "bg-gray-50 border-gray-100 opacity-60" : "bg-white border-blue-50 shadow-sm hover:shadow-md hover:border-blue-200"}`}
     >
       <div className="flex items-center gap-4">
         {/* Custom Checkbox */}
