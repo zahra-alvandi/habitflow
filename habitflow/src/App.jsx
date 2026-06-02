@@ -115,6 +115,9 @@ export default function App() {
               </div>
             )}
           </div>
+          <div className="hidden md:block mt-10 w-full max-w-lg mx-auto bg-white p-6 rounded-3xl border border-gray-100 shadow-sm">
+            <TaskForm onAdd={addTask} />
+          </div>
         </main>
       </div>
 

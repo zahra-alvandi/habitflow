@@ -18,12 +18,12 @@ export default function Navbar({ onToggleSidebar, onOpenForm }) {
       </button>
 
       <div className="flex items-center gap-2">
-        <span className="font-bold text-slate-800">Study/Workout Planner</span>
+        <span className="font-bold text-slate-800 text-sm md:text-xl">Study/Workout Planner</span>
       </div>
 
       <button
         onClick={onOpenForm}
-        className="inline-flex items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 active:scale-[0.98]"
+        className="inline-flex md:hidden items-center justify-center rounded-xl bg-blue-600 px-4 py-2 text-sm font-bold text-white hover:bg-blue-700 active:scale-[0.98]"
         type="button"
       >
         + Add
