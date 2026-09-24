@@ -3,25 +3,34 @@ import dayGridPlugin from "@fullcalendar/daygrid";
 import timeGridPlugin from "@fullcalendar/timegrid";
 import interactionPlugin from "@fullcalendar/interaction";
 
-function toEvent(task) {
+function toEvent(task, categories) {
   const start =
     task.date && task.time ? `${task.date}T${task.time}` : task.date;
-  const isStudy = task.type === "study";
+
+  const category = categories?.find((c) => c.id === task.type);
+  const color = category?.color || "#6366F1";
+
+  const bg = `${color}20`;
 
   return {
     id: task.id,
     title: task.title,
     start,
     allDay: !task.time,
-    backgroundColor: isStudy ? "#EEF2FF" : "#FFF7ED",
-    borderColor: isStudy ? "#6366F1" : "#F97316",
+    backgroundColor: bg,
+    borderColor: color,
     textColor: "#0f172a",
-    extendedProps: { task },
+    extendedProps: { task, category },
   };
 }
 
-export default function CalendarView({ tasks, onSelectDate, onSelectTask }) {
-  const events = tasks.filter((t) => t.date).map(toEvent);
+export default function CalendarView({
+  tasks,
+  categories,
+  onSelectDate,
+  onSelectTask,
+}) {
+  const events = tasks.filter((t) => t.date).map((t) => toEvent(t, categories));
 
   return (
     <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 p-4 shadow-sm transition-colors">
@@ -86,9 +95,7 @@ export default function CalendarView({ tasks, onSelectDate, onSelectTask }) {
           background: #6366f1 !important;
           border-color: #6366f1 !important;
         }
-        .dark .fc .fc-scrollgrid {
-          border-color: #334155;
-        }
+        .dark .fc .fc-scrollgrid { border-color: #334155; }
         .dark .fc th {
           background: #1e293b;
           color: #94a3b8;
@@ -98,34 +105,13 @@ export default function CalendarView({ tasks, onSelectDate, onSelectTask }) {
           border-color: #334155 !important;
           background: #0f172a;
         }
-        .dark .fc .fc-daygrid-day-frame {
-          background: #0f172a;
-        }
-        .dark .fc .fc-daygrid-day:hover .fc-daygrid-day-frame {
-          background: #1e293b;
-        }
-        .dark .fc .fc-day-today {
-          background: rgba(99, 102, 241, 0.12) !important;
-        }
-        .dark .fc .fc-daygrid-day-number {
-          color: #cbd5e1;
-        }
-        .dark .fc .fc-daygrid-event {
-          background: rgba(99, 102, 241, 0.2) !important;
-          border-color: #6366f1 !important;
-        }
-        .dark .hf-event__title {
-          color: #f1f5f9 !important;
-        }
-        .dark .fc .fc-col-header-cell-cushion {
-          color: #94a3b8;
-        }
-        .dark .fc .fc-timegrid-slot {
-          background: #0f172a;
-        }
-        .dark .fc .fc-timegrid-axis {
-          color: #64748b;
-        }
+        .dark .fc .fc-daygrid-day-frame { background: #0f172a; }
+        .dark .fc .fc-daygrid-day:hover .fc-daygrid-day-frame { background: #1e293b; }
+        .dark .fc .fc-day-today { background: rgba(99, 102, 241, 0.12) !important; }
+        .dark .fc .fc-daygrid-day-number { color: #cbd5e1; }
+        .dark .fc .fc-daygrid-event { background: rgba(99, 102, 241, 0.2) !important; }
+        .dark .hf-event__title { color: #f1f5f9 !important; }
+        .dark .fc .fc-col-header-cell-cushion { color: #94a3b8; }
       `}</style>
 
       <FullCalendar
@@ -146,15 +132,12 @@ export default function CalendarView({ tasks, onSelectDate, onSelectTask }) {
           if (task) onSelectTask?.(task);
         }}
         eventContent={(arg) => {
-          const task = arg.event.extendedProps?.task;
-          const isStudy = task?.type === "study";
+          const category = arg.event.extendedProps?.category;
+          const color = category?.color || "#6366F1";
           return (
             <div className="hf-event">
-              <span
-                className="hf-event__icon"
-                style={{ color: isStudy ? "#4F46E5" : "#EA580C" }}
-              >
-                {isStudy ? "●" : "◆"}
+              <span className="hf-event__icon" style={{ color }}>
+                ●
               </span>
               <span className="hf-event__title">{arg.event.title}</span>
             </div>

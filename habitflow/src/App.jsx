@@ -1,21 +1,34 @@
 import { useState } from "react";
 import { useLocalStorage } from "./Hooks/useLocalStorage";
 import { useDarkMode } from "./Hooks/useDarkMode";
+import { useCategories } from "./Hooks/useCategories";
+import { useAuth } from "./Hooks/useAuth";
 
 import TaskForm from "./Components/TaskForm";
 import TaskItem from "./Components/TaskItem";
 import Sidebar from "./Components/Sidebar";
 import Navbar from "./Components/Navbar";
 import CalendarView from "./Components/CalendarView";
+import CategoryModal from "./Components/CategoryModal";
+import LoginPage from "./Components/LoginPage";
+import SettingsModal from "./Components/SettingsModal";
 
 export default function App() {
+  const { user, login, logout, isAuthenticated } = useAuth();
   const [tasks, setTasks] = useLocalStorage("planner-v1", []);
   const [activeView, setActiveView] = useState("tasks");
   const [selectedDate, setSelectedDate] = useState(null);
   const [theme, toggleTheme] = useDarkMode();
+  const { categories, addCategory } = useCategories();
 
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isFormOpen, setIsFormOpen] = useState(false);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+
+  if (!isAuthenticated) {
+    return <LoginPage onLogin={login} />;
+  }
 
   const addTask = (task) => {
     setTasks((prev) => [task, ...prev]);
@@ -44,6 +57,9 @@ export default function App() {
         onOpenForm={() => setIsFormOpen(true)}
         theme={theme}
         onToggleTheme={toggleTheme}
+        user={user}
+        onLogout={logout}
+        onOpenSettings={() => setIsSettingsOpen(true)}
       />
 
       <div className="flex">
@@ -51,6 +67,7 @@ export default function App() {
         <aside className="hidden md:block w-72 shrink-0 border-r border-slate-200/60 dark:border-slate-800">
           <Sidebar
             tasks={tasks}
+            categories={categories}
             activeView={activeView}
             onOpenTasks={() => setActiveView("tasks")}
             onOpenCalendar={() => setActiveView("calendar")}
@@ -76,6 +93,7 @@ export default function App() {
           >
             <Sidebar
               tasks={tasks}
+              categories={categories}
               activeView={activeView}
               onOpenTasks={() => {
                 setActiveView("tasks");
@@ -92,23 +110,30 @@ export default function App() {
         {/* Main */}
         <main className="flex-1 px-4 md:px-10 py-6 md:py-8">
           <div className="mx-auto max-w-3xl space-y-5">
-            {/* View header */}
-            <div className="flex items-end justify-between">
+            <div className="flex items-end justify-between flex-wrap gap-3">
               <div>
                 <h1 className="text-2xl md:text-3xl font-extrabold text-slate-800 dark:text-slate-100 tracking-tight">
-                  {activeView === "calendar" ? "Calendar" : "Your Tasks"}
+                  {activeView === "calendar"
+                    ? "Calendar"
+                    : `Hi ${user.username} 👋`}
                 </h1>
                 <p className="text-sm text-slate-400 dark:text-slate-500 mt-1">
                   {activeView === "calendar"
                     ? "Click a day to filter tasks."
-                    : `${tasks.length} task${tasks.length === 1 ? "" : "s"} · ${tasks.filter((t) => t.completed).length} done`}
+                    : `${tasks.length} task${
+                        tasks.length === 1 ? "" : "s"
+                      } · ${tasks.filter((t) => t.completed).length} done`}
                 </p>
               </div>
             </div>
 
             {activeView === "calendar" ? (
               <>
-                <CalendarView tasks={tasks} onSelectDate={setSelectedDate} />
+                <CalendarView
+                  tasks={tasks}
+                  categories={categories}
+                  onSelectDate={setSelectedDate}
+                />
                 <div className="space-y-3">
                   {filteredTasks.length === 0 ? (
                     <EmptyState
@@ -123,6 +148,7 @@ export default function App() {
                       <TaskItem
                         key={t.id}
                         task={t}
+                        categories={categories}
                         onToggle={toggleTask}
                         onDelete={deleteTask}
                       />
@@ -133,12 +159,15 @@ export default function App() {
             ) : (
               <div className="space-y-3">
                 {tasks.length === 0 ? (
-                  <EmptyState message="No tasks yet. Add your first one below ✨" />
+                  <EmptyState
+                    message={`No tasks yet, ${user.username}. Add your first one below ✨`}
+                  />
                 ) : (
                   tasks.map((t) => (
                     <TaskItem
                       key={t.id}
                       task={t}
+                      categories={categories}
                       onToggle={toggleTask}
                       onDelete={deleteTask}
                     />
@@ -149,39 +178,72 @@ export default function App() {
           </div>
 
           <div className="hidden md:block mt-12 w-full max-w-lg mx-auto bg-white/80 dark:bg-slate-800/80 backdrop-blur-sm p-7 rounded-3xl border border-slate-200/70 dark:border-slate-700/70 shadow-xl shadow-slate-200/40 dark:shadow-black/40 transition-colors">
-            <TaskForm onAdd={addTask} />
+            <TaskForm
+              onAdd={addTask}
+              categories={categories}
+              onOpenCategoryModal={() => setIsCategoryModalOpen(true)}
+            />
           </div>
         </main>
       </div>
 
-      {/* TaskForm BottomSheet / Modal */}
+      {/* TaskForm Modal */}
       {isFormOpen && (
         <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center">
           <div
             className="absolute inset-0 bg-slate-900/50 dark:bg-black/70 backdrop-blur-sm animate-[fadeIn_0.2s_ease-out]"
             onClick={() => setIsFormOpen(false)}
           />
-
-          <div className="relative w-full sm:max-w-md bg-white dark:bg-slate-800 rounded-t-3xl sm:rounded-3xl p-6 sm:p-7 shadow-2xl animate-[slideUp_0.3s_cubic-bezier(0.16,1,0.3,1)] transition-colors">
+          <div className="relative w-full sm:max-w-md bg-white dark:bg-slate-800 rounded-t-3xl sm:rounded-3xl p-6 sm:p-7 shadow-2xl animate-[slideUp_0.3s_cubic-bezier(0.16,1,0.3,1)] transition-colors max-h-[90vh] overflow-y-auto">
             <button
-              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all"
+              className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-200 hover:bg-slate-100 dark:hover:bg-slate-700 transition-all z-10"
               onClick={() => setIsFormOpen(false)}
               aria-label="Close form"
               type="button"
             >
-              <svg viewBox="0 0 24 24" className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
+              <svg
+                viewBox="0 0 24 24"
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+              >
                 <path d="M18 6 6 18M6 6l12 12" />
               </svg>
             </button>
-
-            <TaskForm onAdd={addTask} />
+            <TaskForm
+              onAdd={addTask}
+              categories={categories}
+              onOpenCategoryModal={() => setIsCategoryModalOpen(true)}
+            />
           </div>
         </div>
+      )}
+
+      {/* Category Modal */}
+      {isCategoryModalOpen && (
+        <CategoryModal
+          onClose={() => setIsCategoryModalOpen(false)}
+          onSave={addCategory}
+        />
+      )}
+
+      {/* Settings Modal */}
+      {isSettingsOpen && (
+        <SettingsModal
+          user={user}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onLogout={logout}
+          onClose={() => setIsSettingsOpen(false)}
+        />
       )}
     </div>
   );
 }
 
+// 👇 EmptyState یه کامپوننت جداست — بیرون از App
 function EmptyState({ message }) {
   return (
     <div className="flex flex-col items-center justify-center py-16 px-4 text-center">

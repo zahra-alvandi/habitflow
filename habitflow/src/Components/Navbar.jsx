@@ -1,8 +1,13 @@
+import UserMenu from "./UserMenu";
+
 export default function Navbar({
   onToggleSidebar,
   onOpenForm,
   theme,
   onToggleTheme,
+  user,
+  onLogout,
+  onOpenSettings, 
 }) {
   return (
     <header className="sticky top-0 z-40 w-full h-16 flex items-center justify-between px-4 md:px-6 backdrop-blur-xl bg-white/70 dark:bg-slate-900/70 border-b border-slate-200/60 dark:border-slate-800 transition-colors">
@@ -56,7 +61,7 @@ export default function Navbar({
         {/* Theme toggle */}
         <button
           onClick={onToggleTheme}
-          className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 hover:cursor-pointer transition-all"
+          className="relative w-10 h-10 flex items-center justify-center rounded-xl bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 transition-all"
           aria-label="Toggle theme"
           type="button"
         >
@@ -87,6 +92,14 @@ export default function Navbar({
             </svg>
           )}
         </button>
+
+        {user && (
+          <UserMenu
+            user={user}
+            onLogout={onLogout}
+            onOpenSettings={onOpenSettings}
+          />
+        )}
 
         {/* Mobile Add */}
         <button
