@@ -24,22 +24,108 @@ export default function CalendarView({ tasks, onSelectDate, onSelectTask }) {
   const events = tasks.filter((t) => t.date).map(toEvent);
 
   return (
-    <div className="rounded-2xl border border-slate-200 bg-white p-4 shadow-sm">
-      {/* استایل‌های اختصاصی FullCalendar برای مینیمال شدن */}
+    <div className="rounded-2xl border border-slate-200 dark:border-slate-700 bg-white dark:bg-slate-800/80 p-4 shadow-sm transition-colors">
       <style>{`
         .fc { font-family: inherit; color: #0f172a; }
         .fc .fc-toolbar-title { font-size: 1.05rem; font-weight: 700; }
-        .fc .fc-button { background: #0f172a !important; border: 1px solid #0f172a !important; border-radius: 12px !important; padding: 0.4rem 0.8rem !important; font-size: 0.8rem !important; font-weight: 600 !important; }
+        .fc .fc-button {
+          background: #0f172a !important;
+          border: 1px solid #0f172a !important;
+          border-radius: 12px !important;
+          padding: 0.4rem 0.8rem !important;
+          font-size: 0.8rem !important;
+          font-weight: 600 !important;
+        }
         .fc .fc-button:hover { background: #1e293b !important; }
-        .fc .fc-button-primary:not(:disabled).fc-button-active { background: #2563eb !important; border-color: #2563eb !important; }
-        .fc .fc-scrollgrid { border: 1px solid #e2e8f0; border-radius: 18px; overflow: hidden; }
-        .fc th { background: #f8fafc; color: #475569; font-size: 0.8rem; padding: 10px 0; border-color: #e2e8f0; }
+        .fc .fc-button-primary:not(:disabled).fc-button-active {
+          background: #2563eb !important;
+          border-color: #2563eb !important;
+        }
+        .fc .fc-scrollgrid {
+          border: 1px solid #e2e8f0;
+          border-radius: 18px;
+          overflow: hidden;
+        }
+        .fc th {
+          background: #f8fafc;
+          color: #475569;
+          font-size: 0.8rem;
+          padding: 10px 0;
+          border-color: #e2e8f0;
+        }
         .fc td, .fc th { border-color: #e2e8f0 !important; }
         .fc .fc-daygrid-day-frame { min-height: 100px; padding: 4px; }
-        .fc .fc-daygrid-event { border: none !important; border-radius: 8px !important; padding: 2px 6px !important; }
+        .fc .fc-daygrid-event {
+          border: none !important;
+          border-radius: 8px !important;
+          padding: 2px 6px !important;
+        }
         .hf-event { display: flex; align-items: center; gap: 4px; }
         .hf-event__icon { font-size: 10px; }
-        .hf-event__title { font-size: 11px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .hf-event__title {
+          font-size: 11px;
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+
+        /* 🌙 Dark Mode */
+        .dark .fc { color: #e2e8f0; }
+        .dark .fc .fc-toolbar-title { color: #f1f5f9; }
+        .dark .fc .fc-button {
+          background: #1e293b !important;
+          border-color: #334155 !important;
+          color: #e2e8f0 !important;
+        }
+        .dark .fc .fc-button:hover {
+          background: #334155 !important;
+          border-color: #475569 !important;
+        }
+        .dark .fc .fc-button-primary:not(:disabled).fc-button-active {
+          background: #6366f1 !important;
+          border-color: #6366f1 !important;
+        }
+        .dark .fc .fc-scrollgrid {
+          border-color: #334155;
+        }
+        .dark .fc th {
+          background: #1e293b;
+          color: #94a3b8;
+          border-color: #334155 !important;
+        }
+        .dark .fc td {
+          border-color: #334155 !important;
+          background: #0f172a;
+        }
+        .dark .fc .fc-daygrid-day-frame {
+          background: #0f172a;
+        }
+        .dark .fc .fc-daygrid-day:hover .fc-daygrid-day-frame {
+          background: #1e293b;
+        }
+        .dark .fc .fc-day-today {
+          background: rgba(99, 102, 241, 0.12) !important;
+        }
+        .dark .fc .fc-daygrid-day-number {
+          color: #cbd5e1;
+        }
+        .dark .fc .fc-daygrid-event {
+          background: rgba(99, 102, 241, 0.2) !important;
+          border-color: #6366f1 !important;
+        }
+        .dark .hf-event__title {
+          color: #f1f5f9 !important;
+        }
+        .dark .fc .fc-col-header-cell-cushion {
+          color: #94a3b8;
+        }
+        .dark .fc .fc-timegrid-slot {
+          background: #0f172a;
+        }
+        .dark .fc .fc-timegrid-axis {
+          color: #64748b;
+        }
       `}</style>
 
       <FullCalendar
