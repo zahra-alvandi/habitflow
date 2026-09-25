@@ -96,7 +96,7 @@ export default function TaskItem({ task, categories, onToggle, onDelete }) {
           e.stopPropagation();
           onDelete(task.id);
         }}
-        className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-xl shrink-0 transition-all opacity-40 group-hover:opacity-100"
+        className="p-2 text-slate-300 dark:text-slate-600 hover:text-red-500 dark:hover:text-red-400 hover:bg-red-50 hover:cursor-pointer dark:hover:bg-red-500/10 rounded-xl shrink-0 transition-all opacity-40 group-hover:opacity-100"
         aria-label="Delete task"
         type="button"
       >

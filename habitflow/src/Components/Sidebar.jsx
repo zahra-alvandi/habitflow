@@ -175,7 +175,7 @@ export default function Sidebar({
       </div>
 
       {/* Trophy Card */}
-      <div className="relative overflow-hidden flex flex-col items-center justify-center rounded-3xl p-5 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-700 shadow-xl shadow-indigo-500/30 text-white">
+      <div className="relative overflow-hidden flex flex-col items-center justify-center rounded-3xl p-5 bg-gradient-to-br from-indigo-500 via-indigo-600 to-purple-700 shadow-xl shadow-indigo-500/30 text-white mb-12">
         <div className="absolute -top-8 -right-8 w-32 h-32 bg-white/10 rounded-full blur-2xl" />
         <div className="absolute -bottom-10 -left-6 w-28 h-28 bg-purple-400/20 rounded-full blur-2xl" />
 

@@ -132,7 +132,7 @@ export default function TaskForm({ onAdd, categories, onOpenCategoryModal }) {
       {/* Submit */}
       <button
         type="submit"
-        className="group w-full relative overflow-hidden rounded-2xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-purple-600 py-3.5 font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 active:scale-[0.98] transition-all"
+        className="group w-full relative overflow-hidden rounded-2xl bg-gradient-to-tr from-indigo-500 via-indigo-600 to-purple-600 py-3.5 font-bold text-white shadow-lg shadow-indigo-500/30 hover:shadow-indigo-500/50 hover:cursor-pointer active:scale-[0.98] transition-all"
       >
         <span className="relative z-10 flex items-center justify-center gap-2">
           <Plus size={18} />
