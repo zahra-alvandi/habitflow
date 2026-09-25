@@ -22,7 +22,6 @@ export default function Sidebar({
     },
   ];
 
-  // آمار هر دسته
   const categoryStats = categories.map((cat) => {
     const catTasks = tasks.filter((t) => t.type === cat.id);
     return {
